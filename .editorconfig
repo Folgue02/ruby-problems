@@ -1,0 +1,3 @@
+[{*.rb,problem_helper}]
+indent_style = space
+indent_size = 2
