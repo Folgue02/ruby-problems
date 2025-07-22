@@ -87,7 +87,12 @@ command 'test' do |c|
     puts "Testing #{test_files.length} test files..."
     failed = 0
     test_files.each do |test_file|
-      success = system 'ruby', test_file
+      success = false
+
+      Dir.chdir(problem_dir) do
+        success = system 'ruby', File.basename(test_file)
+      end
+
       failed += 1 if !success
     end
 

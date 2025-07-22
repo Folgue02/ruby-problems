@@ -1,3 +1,5 @@
+require 'pathname'
+
 ##
 # Utils module, contains some methods to save development time and
 # avoid repetition.
@@ -6,8 +8,8 @@ module Utils
 
   ##
   # Opens the input file of the given name located in './inputs/{input_file_name}.txt' 
-  def self.input_file(input_file_name)
-    input_file_path = Pathname(INPUT_DIR_NAME).join input_file_name
+  def self.read_input(input_file_name)
+    input_file_path = Pathname(INPUT_DIR_NAME).join("#{input_file_name}.txt")
     File.read(input_file_path)
   end
 
