@@ -15,13 +15,13 @@ The `program_helper` is not part of the code for the problem solutions, its a sc
 ### 3.1 To instantiate a new problem
 
 ```sh
-./problem_helper create leet 101 
+./problem_helper.rb create leet 101 
 ```
 
 ### 3.2 To run all test files from a problem
 
 ```sh
-./problem_helper test leet 101
+./problem_helper.rb test leet 101
 ```
 
 For more info run `./problem_helper -h`.

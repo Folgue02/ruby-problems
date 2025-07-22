@@ -61,7 +61,7 @@ command 'test' do |c|
   c.desc 'Problem bundle'
   c.arg_name 'bundle'
 
-  c.desc 'Problem ID'
+  c.desc 'Problem name'
   c.arg_name 'problem'
 
   c.action do |global_options, options, args|
@@ -97,6 +97,48 @@ command 'test' do |c|
     end
 
     puts "(#{failed} failed / #{test_files.length} tests ran)"
+  end
+end
+
+desc 'Stashes the solution in a different file (to do not interfere with other testing) with the given name.'
+command 'stash' do |c|
+  c.desc 'Problem bundle'
+  c.arg_name 'bundle'
+
+  c.desc 'Problem name'
+  c.arg_name 'problem'
+
+  c.desc 'Name for the solution'
+  c.arg_name 'name'
+
+  c.desc 'Overwrites a previously stashed solution'
+  c.switch [:f, :force]
+
+  c.action do |global_options, options, args|
+    problem_bundle, problem_name, solution_name = args
+    force_switch = options[:force]
+
+    if problem_name.nil? || problem_bundle.nil? || solution_name.nil?
+      puts 'No problem bundle or name given.'
+      exit 1
+    end
+
+    solution_path = Pathname(problem_bundle).join(problem_name).join("#{problem_name}.rb")
+    target_solution_path = Pathname(problem_bundle).join(problem_name).join("#{problem_name}_#{solution_name}.rb")
+
+    if !File.exist?(solution_path)
+      puts "No such solution file: #{solution_path}"
+      exit 1
+    end
+
+    if File.exist?(target_solution_path) && !force_switch
+      puts "Such solution already exists: #{target_solution_path} (use -f/--force to overwrite the existing stashed solution)"
+      exit 1
+    end
+
+    puts ">> STASHING '#{solution_path}'..."
+
+    FileUtils.cp(solution_path, target_solution_path)
   end
 end
 

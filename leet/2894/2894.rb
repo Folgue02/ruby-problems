@@ -10,12 +10,16 @@
 # @param {Integer} m
 # @return {Integer}
 def difference_of_sums(n, m)
-  num1 = (0..n)
-    .filter { _1 % m != 0 }
-    .sum
-  num2 = (0..n)
-    .filter { _1 % m == 0 }
-    .sum
+  num1, num2 = 0, 0
+  cache = 
+
+  (0..n).each do |num|
+    if num % m == 0
+      num2 += num
+    else
+      num1 += num
+    end
+  end
 
   num1 - num2
 end
